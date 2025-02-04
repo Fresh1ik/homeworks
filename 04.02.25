@@ -1,0 +1,12 @@
+import tkinter as tk
+import random as rd
+
+b = ["red", "blue", "yellow", "green", "purple", "black"]
+
+def fgf():
+    root.config(bg=rd.choice(b))
+
+root = tk.Tk()
+root.geometry("343x324")
+button = tk.Button(root, text = "Magic", fg = "red", command = fgf)    
+button.pack()
