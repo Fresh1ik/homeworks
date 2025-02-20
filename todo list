@@ -1,0 +1,111 @@
+import tkinter as tk
+from tkinter import messagebox
+import keyboard
+root = tk.Tk()
+root.geometry("500x600+600+170")
+root.title("Todo list")
+
+def Tap(event):
+    if event.widget["text"] == "X":
+        event.widget.config(text=" ")
+    else:
+        event.widget.config(text="X")
+def closeapp():
+    root.destroy()
+    messagebox.showinfo("Todo list", " todo list is closed")
+
+def blue():
+    root.config(bg="#a2ecf2")
+    for button in buttons:
+        button.config(bg="#14d2e3")
+    for enter in entrys:
+        enter.config(bg="#c4faff")
+    exButton.config(bg="#144c8c")
+def yellow():
+    root.config(bg="#fffb1c")
+    for button in buttons:
+        button.config(bg="#e6e34e")
+    for enter in entrys:
+        enter.config(bg="#faf9b9")
+    exButton.config(bg="#a6a617")
+def green():
+    root.config(bg="#68e37f")
+    for button in buttons:
+        button.config(bg="#0fa32a")
+    for enter in entrys:
+        enter.config(bg="#c5facf")
+    exButton.config(bg="#205e31")
+def original():
+    root.config(bg="#ebebeb")
+    for button in buttons:
+        button.config(bg="#c9c9c9")
+    for enter in entrys:
+        enter.config(bg="#ffffff")
+    exButton.config(bg="#e3e3e3")
+def Arial():
+    exButton.config(font=("Arial", 20))
+    for enter in entrys:
+        enter.config(font=("Arial", 20))
+    clo_button.config(font=("Arial", 12))
+    label.config(font=("Arial", 12))
+def Ink_free():
+    exButton.config(font=("Ink free", 20))
+    for enter in entrys:
+        enter.config(font=("Ink free", 20))
+    clo_button.config(font=("Ink free", 13))
+    label.config(font=("Ink free", 10))
+def Mon_Cor():
+    for enter in entrys:
+        enter.config(font=("Monotype Corsiva", 20))
+    label.config(font=("Monotype Corsiva", 12))
+    clo_button.config(font=("Monotype corsiva", 12))
+def Closetext():
+    label.destroy()
+    clo_button.destroy()
+def info():
+    messagebox.showinfo("Todo list", "Це список того, що тобі потрібно зробити! Напиши те, що тобі потрібно зробити у поле для введення, а коли ти це зробиш - натисни відповідну кнопку. Якщо ти хочеш замінити завдання - зітри минулий текст, і натисни на відповідну кпонку ще раз. Щоб змінити стилі, використай меню *Custom*, використай меню *font*, щоб змінити шрифт, а щоб вийти з программи, натисни кнопку *Exit*")
+button_texts= ['', '', '', '','', '', '', '', '', '']
+buttons = []
+entrys = []
+row_v = 0
+col_v = 0
+for text in button_texts:
+    button=tk.Button(root, text=text, font=('Ink free', 18), width=2, heigh=1)
+    button.grid(row=row_v, column=col_v)
+    button.bind("<Button-1>", Tap)
+    buttons.append(button)
+    row_v +=1
+    if row_v < 5:
+        row_v +=1
+row_v = 0
+col_v = 1
+for text in button_texts:                                                                                                                   
+    enter=tk.Entry(root, font=('Monotype Corsiva', 20))
+    enter.grid(row=row_v, column=col_v)                   
+    entrys.append(enter)
+    row_v +=1 
+    if row_v < 5:
+        row_v +=1
+exButton = tk.Button(root, text="EXIT", font=('Monotype Corsiva', 20), command=closeapp)
+exButton.place(x=200, y=530)
+
+label = tk.Label(root, text="Введи те, \n що тобі \n потрібно \n зробити, \n і натисни \n на кнопку, \n щоб позначити \n його, як \n *Виконане*. \n Натисни на \n кнопку ще \n раз, щоб \n прибрати \n позначку. \n Щоб прибрати \n цей текст, \n натисніть \nкнопку Close. \n Якщо потрібна \nбільш докладна \n інструкція, \n натисни Q", font=(Arial, 12))
+label.place(x=350, y=10)
+clo_button = tk.Button(root, text="Close", font=(Arial, 12), command=Closetext)
+clo_button.place(x=382, y=420)
+menubar = tk.Menu(root)
+custom_menu = tk.Menu(menubar, font=('Monotype Corsiva', 12), tearoff=0) 
+custom_menu.add_command(label="Original", command=original)
+custom_menu.add_command(label="Blue", command=blue)
+custom_menu.add_command(label="Yellow", command=yellow)
+custom_menu.add_command(label="Green", command=green)
+menubar.add_cascade(label="Custom", menu=custom_menu)
+
+text_menu = tk.Menu(menubar, font=('Monotype Corsiva', 12), tearoff=0) 
+text_menu.add_command(label="Arial", font=("Arial", 12), command = Arial)
+text_menu.add_command(label="Ink free", font=("Ink free", 12), command = Ink_free)
+text_menu.add_command(label="Monotype Corsiva", command = Mon_Cor)
+menubar.add_cascade(label="Font", menu=text_menu)
+root.config(menu=menubar)
+keyboard.add_hotkey('q', info)
+root.mainloop()
