@@ -1,0 +1,35 @@
+import pygame
+def press(event):
+    if event.type == pygame.KEYDOWN: 
+        if event.key == pygame.K_RETURN:
+            rect_position += pygame.math.Vector2(200, 300) 
+pygame.init()
+screen = pygame.display.set_mode((800, 600))
+rect_position = pygame.math.Vector2(200, 300) 
+
+running = True
+size = 100
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.KEYDOWN: 
+            if event.key == pygame.K_d:
+                rect_position += pygame.math.Vector2(50, 0) 
+            elif event.key == pygame.K_w:
+                rect_position += pygame.math.Vector2(0, -50) 
+            elif event.key == pygame.K_s:
+                rect_position += pygame.math.Vector2(0, 50)
+            elif event.key == pygame.K_a:
+                rect_position += pygame.math.Vector2(-50, 0) 
+        screen.fill((255, 255, 255))
+        pygame.draw.rect(screen, (0, 0, 255), (rect_position.x, rect_position.y, size, size))
+        if event.type == pygame.KEYDOWN: 
+            if event.key == pygame.K_UP:
+                size += 10
+            elif event.key == pygame.K_DOWN:
+                size -= 10
+
+        pygame.display.flip()
+screen.bind("<1>", press)
+pygame.quit()
