@@ -22,3 +22,30 @@ print(cursor.fetchall())
 cursor.execute("SELECT * FROM kniggar WHERE category == 'napitok' AND price >= 15 AND avaiable == 'yes'")
 print(cursor.fetchall()) 
 conn.close()
+
+
+
+###################################################################################################################################################
+
+
+conn = sqlite3.connect('my_database1.db')
+cursor = conn.cursor()
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS kniggga (
+
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+title TEXT,
+autor TEXT,
+year INTEGER,
+genre TEXT
+               
+)
+''')
+cursor.execute("INSERT INTO kniggga (title, autor, year, genre) VALUES ('kniga1', 'arkaki', 1995, 'comedy'), ('kniga2', 'arakit', 1992, 'comedy'), ('kniga3', 'afraki', 1989, 'horror')")
+
+conn.commit()
+cursor.execute("SELECT * FROM kniggga WHERE genre == 'comedy'")
+print(cursor.fetchall()) 
+cursor.execute("SELECT * FROM kniggga WHERE year <= 1993")
+print(cursor.fetchall()) 
+conn.close()
