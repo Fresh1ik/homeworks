@@ -405,3 +405,25 @@ startangle=190
 )
 plt.title("Розподіл классифікацій якості вин")
 plt.show()
+
+
+counts = df["quality_label"].value_counts()
+
+colors = ['green', 'blue', 'red']  
+
+plt.bar(counts.index, counts.values, color=colors)
+plt.xlabel('Якість вина')
+plt.ylabel('Кількість зразків')
+plt.title('Розподіл якості вина')
+plt.show()
+
+
+counts = df["quality_label"].value_counts()
+
+plt.plot(counts.index, counts.values, marker='o', color='purple', linewidth=2)
+
+plt.xlabel('Якість вина')
+plt.ylabel('Кількість зразків')
+plt.title('Розподіл якості вина (лінійна діаграма)')
+plt.grid(True)
+plt.show()
