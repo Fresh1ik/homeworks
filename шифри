@@ -1,0 +1,453 @@
+import customtkinter as ctk
+import tkinter as tk
+import hashlib
+import bcrypt
+'''def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+arr = [64, 34, 25, 12, 22, 11, 90]
+print("Невідсортований список:", arr)
+bubble_sort(arr)
+print("Відсортований список:", arr)
+
+
+
+def insertion_sort(arr):
+
+    for i in range(1, len(arr)):
+        key = arr[i] 
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr
+
+arr = [12, 11, 13, 5, 6]
+print("До сортування:", arr)
+sorted_arr = insertion_sort(arr)
+print("Після сортування:", sorted_arr)'''
+
+#############################################################################################################################################################################
+'''def decrypt(encrypted_text,key): 
+    reverse_key={v:k for k,v in key.items()}
+    decrypted_text  = ""
+    for char in encrypted_text: 
+        if char in reverse_key: 
+            decrypted_text += reverse_key [char] 
+        else: 
+            decrypted_text += char 
+    return decrypted_text 
+
+key = {
+'A': '@', 'B': '#', 'C': '$', 'D': '%', 'E': '&', 'F': '*', 'G': '(',
+'H': ')', 'I': '!', 'J': '^', 'K': '_', 'L': '+', 'M': '~', 'N': '`',
+'O': '-', 'P': '=', 'Q': '{', 'R': '}', 'S': '[', 'T': ']', 'U': ';',
+'V': ':', 'W': '"', 'X': "'", 'Y': '<', 'Z': '>', ' ': ' ' 
+}
+
+
+encrypted_text = '[)@++ ! $-~=@}& <-; ]- @ [;~~&} %@<? <-; @}& ~-}& +-:&+< @`% ~-}& ]&~=&}@]&... '
+decrypted =decrypt(encrypted_text, key) 
+print(f"Розшифрований текст: {decrypted}")
+
+cipher_dict = {
+'А': 'g', 'Б': '#', 'В': '$', 'Г': '%', 'Ґ': '&',
+'Д': '*', 'Е': '(', 'Є': ')', 'Ж': '+', 'З': '-',
+'И': '=', 'І': '_', 'Ї': '{', 'Й': '}', 'К': '[',
+'Л': ']', 'М': ':', 'Н': ';', 'О': "'", 'П': '"',
+'Р': '|', 'С': '/', 'Т': '7', 'У': '~', 'Ф': '^',
+'Х': '?', 'Ц': '!', 'Ч': '@', 'Ш': '#', 'Щ': '$',
+'Ь': '%', 'Ю': '^', 'Я': '&'
+} 
+
+strange_dict = {
+'А': 'Я', 'Б': 'Ю', 'В': 'Ь', 'Г': 'Щ', 'Ґ': 'Ш',
+'Д': 'Ч', 'Е': 'Ц', 'Є': 'Х', 'Ж': 'Ф', 'З': 'У',
+'И': 'Т', 'І': 'С', 'Ї': 'Р', 'Й': 'П', 'К': 'О',
+'Л': 'Н', 'М': 'М', 'Н': 'Л', 'О': 'К', 'П': 'Й',
+'Р': 'Ї', 'С': 'І', 'Т': 'И', 'У': 'З', 'Ф': 'Ж',
+'Х': 'Є', 'Ц': 'Е', 'Ч': 'Д', 'Ш': 'Ґ', 'Щ': 'Г',
+'Ь': 'В', 'Ю': 'Б', 'Я': 'А'
+}
+
+def shifr(text):
+    encrypted_text = ""
+    if seon.get() == "1":
+        used = cipher_dict
+    else:
+        used = strange_dict
+
+    for char in text:
+        if char.upper() in used:
+            encrypted_text += used[char.upper()]
+        else:
+            encrypted_text += char
+    return encrypted_text
+
+def deshifr(text):
+    if seon.get() == "1":
+        reverse_dict = {v: k for k, v in cipher_dict.items()}
+    else:
+        reverse_dict = {v: k for k, v in strange_dict.items()}
+
+    decrypted_text = ""
+    for char in text:
+        if char in reverse_dict:
+            decrypted_text += reverse_dict[char]
+        else:
+            decrypted_text += char
+    return decrypted_text
+def update_text():
+    input_text = text_input.get('1.0', 'end-1c')
+    encrypted = shifr(input_text)
+    text_output.delete("1.0", "end")
+    text_output.insert("1.0", encrypted)
+def decrypt_text():
+    input_text = text_input.get('1.0', 'end-1c')
+    decrypted = deshifr(input_text)
+    text_output.delete("1.0", "end")
+    text_output.insert("1.0", decrypted)
+
+root = ctk.CTk()
+root.title("")
+root.geometry("500x470+700+300")
+root.config(bg = "#cae3db")
+text_input = ctk.CTkTextbox(root, width = 450, height=100, font=("Monotype Corsiva", 20))
+text_input.pack(pady = 20)
+
+seon = ctk.StringVar(value="1")
+radio1 = ctk.CTkRadioButton(root, text="simvoli", variable=seon, value="1")
+radio2 = ctk.CTkRadioButton(root, text="bukvi", variable=seon, value="2")
+
+
+encrypt_button =ctk.CTkButton(root, text = "shifr", fg_color="#41f2ba", text_color="#113a6b", command=update_text)
+decrypt_button = ctk.CTkButton(root, text = 'deshifr', fg_color="#41f2ba", text_color="#113a6b" ,command=decrypt_text )
+encrypt_button.pack(pady=10)
+decrypt_button.pack(pady=10)
+
+text_output = ctk.CTkTextbox(root, width = 450, height=100, font=("Monotype Corsiva", 20))
+text_output.pack(pady=20)
+radio1.pack(pady=10, padx=10)
+radio2.pack(pady=10, padx=10)
+root.mainloop()'''
+
+#################################################################################################################################################################
+
+'''def caesar_cipher():
+    shift = int(entryshift.get())
+    text = firsttext.get()
+    encrypted_text = ""
+    for char in text:
+        if char.isalpha():
+            shift_base = ord("A") if char.isupper() else ord('a')
+            encrypted_text += chr((ord(char) - shift_base + shift) % 26 + shift_base)
+        elif char.isdigit():
+            shift_base = ord("0")
+            encrypted_text += chr((ord(char)-shift_base + shift)%48+shift_base)
+        else:
+            encrypted_text += char
+        
+    finaltext.configure(text=encrypted_text)
+
+def uznat():
+    shift = int(entryshift.get())
+    text = firsttext.get()
+    decrypted_text = ""
+    for char in text:
+        if char.isalpha():
+            shift_base = ord("A") if char.isupper() else ord('a')
+            decrypted_text += chr((ord(char) - shift_base - shift) % 26 + shift_base)
+        elif char.isdigit():
+            shift_base = ord("0")
+            decrypted_text += chr((ord(char)-shift_base - shift)%48+shift_base)
+        else:
+            decrypted_text += char
+    finaltext.configure(text=decrypted_text)
+
+
+root = ctk.CTk()
+root.geometry("500x500+600+200")
+root.title("Цезар Шифр")
+
+
+entryshift = ctk.CTkEntry(root, placeholder_text="shift")
+firsttext = ctk.CTkEntry(root)
+finaltext = ctk.CTkLabel(root, text="", font=("Arial", 18))
+
+
+buttonv = ctk.CTkButton(root, text="Зашифрувати", command=caesar_cipher)
+buttoniz = ctk.CTkButton(root, text="Розшифрувати", command=uznat)
+
+
+entryshift.pack(pady=5)
+firsttext.pack(pady=5)
+buttonv.pack(pady=10)
+buttoniz.pack(pady=5)
+finaltext.pack(pady=20)
+
+root.mainloop()'''
+###############################################################################################################
+'''text = "hi"
+hash_object = hashlib.sha256(text.encode())
+hash_object1 = hashlib.sha224(text.encode())
+print("Хеш: ", hash_object.hexdigest())
+print("Хеш: ", hash_object1.hexdigest())
+
+a = input("Enter text for hashing: ") 
+b = "дякую" 
+while a!=b: 
+    hash_object2 = hashlib.sha256(a.encode()) 
+    print("xeш: ", hash_object2.hexdigest()) 
+    a=input("Enter text for hashing: ") 
+print("Хешування закінчено!")
+
+text = input("")
+a = lambda text: hashlib.sha256(text.encode()).hexdigest()
+print(a(text))
+
+list1=["text1", 'text2', "text3"]
+list2=[]
+for i in list1:
+    list2.append(a(i))
+print(list2)
+
+hashlist=[]
+texthash1=input("1:")
+texthash2=input("2:")
+hashlist.append(a(texthash1))
+hashlist.append(a(texthash2))
+i=0
+while i < len(hashlist):
+    if hashlist[i]==hashlist[i+1]:
+        print("yea")
+        break
+    else:
+        print("nah")
+        break'''
+
+
+'''def generate_file_hash(file_path): 
+    sha256_hash = hashlib.sha256() 
+    with open (file_path, "rb") as f: 
+        for byte_block in iter(lambda:f.read(4096), b""): 
+            sha256_hash.update(byte_block) 
+        return sha256_hash.hexdigest() 
+file_path = "my_file.txt" 
+file_hash = generate_file_hash(file_path) 
+print("Хеш файлу: ", file_hash)'''
+
+
+##########################################################################################################################################################################
+
+
+'''password = "mysecretpassword"
+salt = bcrypt.gensalt()
+print(salt)
+hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
+print(hashed_password)
+entered_password = input("")
+i = 1
+while i < 3:
+    if bcrypt.checkpw(entered_password.encode('utf-8'), hashed_password):
+        print("Пароль правильний!")
+        break
+    else:   
+        print("Невірний пароль!")
+    entered_password = input("")
+    i+=1
+if i == 3:
+    print("nah")'''
+
+
+'''db=[]
+def reg():
+    username = input("Enter username: ")
+    password = input("Enter password: ")
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(password.encode("utf-8"), salt)
+    db.append({"username":username, "hashed_password":hashed_password})
+    print(f"user {username} registered!")
+def login():
+    username = input("Enter username: ")
+    password = input("Enter password: ")
+    for user in db:
+        if user['username'] == username:
+            if bcrypt.checkpw(password.encode("utf-8"), user['hashed_password']):
+                print(f"Greetings, {username}!\n")
+                return
+            else:
+                print('Wrong password!\n')
+                return
+        print(f"User {username} is not found!")
+def main():
+    while True:
+        print("1.Register")
+        print("2.Login")
+        print("3.Exit")
+        ch = input("Choose da option:")
+        if ch == "1":
+            reg()
+        elif ch == "2":
+            login()
+        elif ch == "3":
+            print("Bye!")
+            break
+        else:
+            print("wha\n")
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+db=[]
+def reg():
+    username = nick.get()
+    password = passw.get()
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(password.encode("utf-8"), salt)
+    db.append({"username":username, "hashed_password":hashed_password})
+    label.config(text = f"user {username} registered!")
+def login():
+    username = nick.get()
+    password = passw.get()
+    for user in db:
+        if user['username'] == username:
+            if bcrypt.checkpw(password.encode("utf-8"), user['hashed_password']):
+                label.config(text = f"Greetings, {username}!")
+                return
+            else:
+                label.config(text = 'Wrong password!')
+                return
+        label.config(text = f"User {username} is not found!")
+
+
+root = tk.Tk()
+root.geometry("600x600")
+
+nick = tk.Entry(root)
+passw = tk.Entry(root)
+nick.pack()
+passw.pack()
+
+b=tk.Button(root, text="reg", command=reg)
+b1=tk.Button(root, text='login', command=login)
+b.pack()
+b1.pack()
+
+label = tk.Label(root, text = "")
+label.pack()
+
+
+root.mainloop()'''
+
+
+
+
+
+
+
+#проэкт:
+
+
+key = {
+'А': 'g', 'Б': '♀', 'В': '♫', 'Г': '─', 'Ґ': '&',
+'Д': '*', 'Е': '(', 'Є': ')', 'Ж': '+', 'З': '-',
+'И': '=', 'І': '_', 'Ї': '{', 'Й': '}', 'К': '[',
+'Л': ']', 'М': ':', 'Н': ';', 'О': "'", 'П': '"',
+'Р': '|', 'С': '/', 'Т': '7', 'У': '~', 'Ф': '╖',
+'Х': '?', 'Ц': '!', 'Ч': '@', 'Ш': '#', 'Щ': '$',
+'Ь': '%', 'Ю': '^', 'Я': '&'
+} 
+
+ukr = "АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ"
+ukr += ukr.lower() 
+
+T = "7659801684:AAHsgvcE6DPekycV6RZiNyElQ8-bsmoH5uc"
+bot= telebot.TeleBot(T)
+ID=1020263895
+
+@bot.message_handler(commands=['start'])
+def send_help(message):
+    bot.send_message(message.chat.id, "напиши /help для того, щоб дізнатися про команди")
+@bot.message_handler(commands=['help'])
+def send_help(message):
+    bot.send_message(message.chat.id, "Ось доступні команди:\nДля хешу: /hash\nДля массонського шифру:/massonde, /massonen\nДля шифру Цезаря:/ceasaren, /ceasarde")
+
+
+@bot.message_handler(commands=['hash'])
+def send_hash(message):
+    text = message.text[6:]
+    if message.text[6:] == "":
+        bot.send_message(message.chat.id, "нічо нема")
+        return
+    hat = hashlib.sha256(text.encode())
+    ha=hat.hexdigest()
+    bot.send_message(message.chat.id, f"ось захешований варіант тексту:{ha}")
+
+@bot.message_handler(commands=['ceasaren'])
+def send_enceasar(message):
+    shift = 3
+    text = message.text[10:]
+    encrypted_text = ""
+    for char in text:
+        if char.isalpha():
+            shift_base = ord("A") if char.isupper() else ord('a')
+            encrypted_text += chr((ord(char) - shift_base + shift) % 26 + shift_base)
+        elif char.isdigit():
+            shift_base = ord("0")
+            encrypted_text += chr((ord(char)-shift_base + shift)%48+shift_base)
+        else:
+            encrypted_text += char
+    bot.send_message(message.chat.id, f"ось зашифрований шифром цезаря варіант тексту:{encrypted_text}")
+
+@bot.message_handler(commands=['ceasarde'])
+def send_deceaser(message):
+    shift = 3
+    text = message.text[10:]
+    decrypted_text = ""
+    for char in text:
+        if char.isalpha():
+            shift_base = ord("A") if char.isupper() else ord('a')
+            decrypted_text += chr((ord(char) - shift_base - shift) % 26 + shift_base)
+        elif char.isdigit():
+            shift_base = ord("0")
+            decrypted_text += chr((ord(char)-shift_base - shift)%48+shift_base)
+        else:
+            decrypted_text += char
+    bot.send_message(message.chat.id, f"ось дешифрований шифром цезаря варіант тексту:{decrypted_text}")
+
+
+@bot.message_handler(commands=['massonde'])
+def send_deshifr(message):
+    text = message.text[10:]
+    reverse_dict = {v: k for k, v in key.items()}
+    decrypted_mason = ""
+    for char in text:
+        if char in reverse_dict:
+            decrypted_mason += reverse_dict[char]
+        else:
+            decrypted_mason += char
+    bot.send_message(message.chat.id, f"ось дешифрований шифром масона варіант тексту:{decrypted_mason}")
+
+
+
+@bot.message_handler(commands=['massonen'])
+def send_deshifr(message):
+    text = message.text[10:].upper()
+    reverse_dict = key
+    encrypted_mason = ""
+    for char in text:
+        if char in reverse_dict:
+            encrypted_mason += reverse_dict[char]
+        else:
+            encrypted_mason += char
+    bot.send_message(message.chat.id, f"ось 3aшифрований шифром масона варіант тексту:{encrypted_mason}")
+
+bot.polling()
